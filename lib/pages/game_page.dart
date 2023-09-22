@@ -235,7 +235,6 @@ class _GamePageState extends State<GamePage> {
 
   void rest() {
     bord = ['', '', '', '', '', '', '', '', ''];
-    print('1');
   }
 
   void onBtnClick(int index, Color colorOfText, BuildContext context) {
