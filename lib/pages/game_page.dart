@@ -1,6 +1,5 @@
-
-
 import 'package:awesome_dialog/awesome_dialog.dart';
+import 'package:calculater_app/model/them.dart';
 import 'package:flutter/material.dart';
 import '../model/players_model.dart';
 import '../widgets/bord_btn.dart';
@@ -16,7 +15,6 @@ class GamePage extends StatefulWidget {
 }
 
 class _GamePageState extends State<GamePage> {
- 
   String player1 = '';
   String player2 = '';
   Color colorOfSymbol1 = const Color(0x000000ff);
@@ -31,7 +29,6 @@ class _GamePageState extends State<GamePage> {
     player1 = names.player1Name;
     player2 = names.player2Name;
     return Scaffold(
-      backgroundColor: const Color(0xff303d5e),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(
@@ -44,27 +41,25 @@ class _GamePageState extends State<GamePage> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      const Text(
+                      Text(
                         ' Turn : ',
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 25,
-                            fontWeight: FontWeight.bold),
+                        style: Theme.of(context).textTheme.bodyMedium,
                       ),
                       counter.isEven
                           ? Text(
-                             player1,
-                              style: const TextStyle(
-                                  color: Color(0xffee5e40),
-                                  fontSize: 25,
-                                  fontWeight: FontWeight.bold),
+                              player1,
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyMedium!
+                                  .copyWith(color: MyThemData.firstPlayerColor),
                             )
                           : Text(
                               player2,
-                              style: const TextStyle(
-                                  color: Color(0xff05aca4),
-                                  fontSize: 25,
-                                  fontWeight: FontWeight.bold),
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyMedium!
+                                  .copyWith(
+                                      color: MyThemData.secondPlayerColor),
                             ),
                     ],
                   )),
@@ -82,6 +77,7 @@ class _GamePageState extends State<GamePage> {
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
                           BordBtn(
+                            context: context,
                             onBtnClick: onBtnClick,
                             index: 0,
                             symbol: bord[0],
@@ -90,6 +86,7 @@ class _GamePageState extends State<GamePage> {
                                 : colorOfSymbol2,
                           ),
                           BordBtn(
+                            context: context,
                             onBtnClick: onBtnClick,
                             index: 1,
                             symbol: bord[1],
@@ -98,6 +95,7 @@ class _GamePageState extends State<GamePage> {
                                 : colorOfSymbol2,
                           ),
                           BordBtn(
+                            context: context,
                             onBtnClick: onBtnClick,
                             symbol: bord[2],
                             index: 2,
@@ -113,6 +111,7 @@ class _GamePageState extends State<GamePage> {
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
                         BordBtn(
+                          context: context,
                           onBtnClick: onBtnClick,
                           symbol: bord[3],
                           index: 3,
@@ -120,6 +119,7 @@ class _GamePageState extends State<GamePage> {
                               bord[3] == 'X' ? colorOfSymbol1 : colorOfSymbol2,
                         ),
                         BordBtn(
+                          context: context,
                           onBtnClick: onBtnClick,
                           symbol: bord[4],
                           index: 4,
@@ -127,6 +127,7 @@ class _GamePageState extends State<GamePage> {
                               bord[4] == 'X' ? colorOfSymbol1 : colorOfSymbol2,
                         ),
                         BordBtn(
+                          context: context,
                           onBtnClick: onBtnClick,
                           symbol: bord[5],
                           index: 5,
@@ -140,6 +141,7 @@ class _GamePageState extends State<GamePage> {
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
                           BordBtn(
+                            context: context,
                             onBtnClick: onBtnClick,
                             symbol: bord[6],
                             index: 6,
@@ -148,6 +150,7 @@ class _GamePageState extends State<GamePage> {
                                 : colorOfSymbol2,
                           ),
                           BordBtn(
+                            context: context,
                             onBtnClick: onBtnClick,
                             symbol: bord[7],
                             index: 7,
@@ -156,6 +159,7 @@ class _GamePageState extends State<GamePage> {
                                 : colorOfSymbol2,
                           ),
                           BordBtn(
+                            context: context,
                             onBtnClick: onBtnClick,
                             symbol: bord[8],
                             index: 8,
@@ -177,7 +181,7 @@ class _GamePageState extends State<GamePage> {
               children: [
                 Expanded(
                   child: GameBtn(
-                    color: const Color(0xff45a14f),
+                    color: MyThemData.greenColor,
                     txt: 'Reset Game',
                     function: () {
                       rest();
@@ -191,7 +195,7 @@ class _GamePageState extends State<GamePage> {
                 ),
                 Expanded(
                   child: GameBtn(
-                    color: const Color(0xffff644d),
+                    color: MyThemData.firstPlayerColor,
                     txt: 'Restart Game',
                     function: () {
                       Navigator.pushReplacementNamed(
@@ -211,20 +215,16 @@ class _GamePageState extends State<GamePage> {
   }
 
   bool checkWiner(String symbol) {
-    //for row
     for (int i = 0; i < bord.length; i += 3) {
       if (bord[i] == symbol && bord[i + 2] == symbol && bord[i + 1] == symbol) {
         return true;
       }
     }
-    //for column
     for (int i = 0; i < 3; i++) {
-      //0 3 6
       if (bord[i] == symbol && bord[i + 3] == symbol && bord[i + 6] == symbol) {
         return true;
       }
     }
-    //for dioagnel
     if ((bord[0] == symbol && bord[4] == symbol && bord[8] == symbol) ||
         (bord[2] == symbol && bord[4] == symbol && bord[6] == symbol)) {
       return true;
@@ -235,41 +235,52 @@ class _GamePageState extends State<GamePage> {
 
   void rest() {
     bord = ['', '', '', '', '', '', '', '', ''];
+    print('1');
   }
 
-  onBtnClick(int index, Color colorOfText) async {
+  void onBtnClick(int index, Color colorOfText, BuildContext context) {
     if (bord[index].isNotEmpty) return;
     if (counter.isEven) {
       bord[index] = 'X';
-      colorOfText = const Color(0xffee5e40);
+      colorOfText = MyThemData.firstPlayerColor;
       colorOfSymbol1 = colorOfText;
       if (checkWiner('X')) {
         AwesomeDialog(
-                btnOkOnPress: () {
-                  rest();
-                },
-                title: '$player1 Win ',
-                context: context,
-                dialogType: DialogType.success,
-                desc: 'he will Start next game',
-                animType: AnimType.rightSlide,
-                btnOkText: 'Play Again')
-            .show();
+            btnOkOnPress: () {
+            },
+            title: '$player1 Win ',
+            context: context,
+            dialogType: DialogType.success,
+            descTextStyle: Theme.of(context)
+                .textTheme
+                .bodySmall!
+                .copyWith(color: Colors.black, fontSize: 15),
+            desc: 'he will Start next game',
+            animType: AnimType.rightSlide,
+            btnOkText: 'Play Again',
+            btnCancelText: 'Exit',
+            btnCancelOnPress: () {
+              Navigator.pushReplacementNamed(context, LoginPage.routeName);
+            }).show();
         rest();
         counter++;
       }
     } else {
       bord[index] = 'O';
-      colorOfText = const Color(0xff0daaa7);
+      colorOfText = MyThemData.secondPlayerColor;
       colorOfSymbol2 = colorOfText;
       if (checkWiner('O')) {
         AwesomeDialog(
                 btnOkOnPress: () {
                   rest();
                 },
-                title: '$player2 Win ',
+                title: '$player2 Win',
                 context: context,
                 dialogType: DialogType.success,
+                descTextStyle: Theme.of(context)
+                    .textTheme
+                    .bodySmall!
+                    .copyWith(color: Colors.black, fontSize: 15),
                 desc: 'he will Start next game',
                 animType: AnimType.rightSlide,
                 btnOkText: 'Play Again')
@@ -277,7 +288,6 @@ class _GamePageState extends State<GamePage> {
         rest();
         counter++;
       }
-   
     }
 
     setState(() {});

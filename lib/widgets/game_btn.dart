@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 
 class GameBtn extends StatelessWidget {
-  const GameBtn({super.key, required this.color, required this.txt, required this.function});
+  const GameBtn(
+      {super.key,
+      required this.color,
+      required this.txt,
+      required this.function});
   final Color color;
   final String txt;
   final Function function;
@@ -18,8 +22,7 @@ class GameBtn extends StatelessWidget {
         ),
         padding: const EdgeInsets.all(20),
         child: Text(txt,
-            style: const TextStyle(
-                fontSize: 20, fontWeight: FontWeight.bold, color: Colors.white),
+            style: Theme.of(context).textTheme.bodySmall,
             textAlign: TextAlign.center),
       ),
     );

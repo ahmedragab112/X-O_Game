@@ -1,4 +1,5 @@
-
+import 'package:awesome_dialog/awesome_dialog.dart';
+import 'package:calculater_app/model/them.dart';
 import 'package:flutter/material.dart';
 
 import '../model/players_model.dart';
@@ -19,7 +20,7 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xff303d5e),
+      backgroundColor: MyThemData.backGroundColor,
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: SafeArea(
@@ -30,12 +31,9 @@ class _LoginPageState extends State<LoginPage> {
                 const SizedBox(
                   height: 100,
                 ),
-                const Text(
+                Text(
                   'Enter Players Name',
-                  style: TextStyle(
-                      fontSize: 30,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white),
+                  style: Theme.of(context).textTheme.bodyLarge,
                 ),
                 const SizedBox(
                   height: 40,
@@ -62,17 +60,35 @@ class _LoginPageState extends State<LoginPage> {
                       backgroundColor: Colors.green,
                       padding: const EdgeInsets.all(15)),
                   onPressed: () {
-                    Navigator.pushNamed(context, GamePage.routName,
+                    if (player1Controller.text.isNotEmpty &&
+                        player2Controller.text.isNotEmpty) {
+                      Navigator.pushNamed(
+                        context,
+                        GamePage.routName,
                         arguments: PlayerModel(
                             player1Name: player1Controller.text,
-                           player2Name: player2Controller.text), 
-                           );
+                            player2Name: player2Controller.text),
+                      );
 
-                    setState(() {});
+                      setState(() {});
+                    } else {
+                      AwesomeDialog(
+                              context: context,
+                              animType: AnimType.rightSlide,
+                              title: 'Error',
+                              desc:
+                                  'You can\'t sign in with out player1\'s name or player2\'s or both',
+                              descTextStyle: Theme.of(context)
+                                  .textTheme
+                                  .bodySmall!
+                                  .copyWith(color: Colors.black, fontSize: 15),
+                              dialogType: DialogType.info)
+                          .show();
+                    }
                   },
-                  child: const Text(
+                  child: Text(
                     'Start Game',
-                    style: TextStyle(color: Colors.white, fontSize: 25),
+                    style: Theme.of(context).textTheme.bodyMedium,
                   ),
                 )
               ],

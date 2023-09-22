@@ -5,12 +5,13 @@ class BordBtn extends StatelessWidget {
       {super.key,
       required this.symbol,
       required this.onBtnClick,
-      required this.index, 
-    required  this.colorOfText});
+      required this.index,
+      required this.colorOfText, required this.context});
   final String symbol;
   final int index;
   final Function onBtnClick;
   final Color colorOfText;
+  final BuildContext context;
   @override
   Widget build(BuildContext context) {
     return Expanded(
@@ -20,9 +21,9 @@ class BordBtn extends StatelessWidget {
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(15),
               side: const BorderSide(color: Color(0XFF5d6b85), width: 5),
-            )),
+            ),),
         onPressed: () {
-          onBtnClick(index,colorOfText);
+          onBtnClick(index, colorOfText,context);
         },
         child: Text(
           symbol,
