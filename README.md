@@ -1,4 +1,4 @@
-# calculater_app
+# X_O_Gane
 
 A new Flutter project.
 
