@@ -1,4 +1,4 @@
-# X_O_Gane
+# X-O_Game
 
 A new Flutter project.
 
